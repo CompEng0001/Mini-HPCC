@@ -1,0 +1,258 @@
+#Alias: CompEng0001
+#Author: Richard Blair (CompEng0001)
+#Student ID: 000947441
+#Date Created: 04/12/2019
+
+Here are my notes for the Rubus Thicket HPC Hashcode cracker
+
+Head/Master-Node
+
+COURSEWORK -> Hardware -- Software -- Task
+
+
+## Amadhl Laws
+	the potential speed up of an alogrithm on a parallel computing platfrom is given by Amadhl Law. The formal shows that a small part of the program that cannot be paralleised will limit the overal speed-uo available from parallelisation.
+	latency(s) = 1/1-p+(p/s)
+	s is the speedup in latency of the execution of the parallel
+	p is the percentage of the execution time of the whole task concerning the parallel part of the task before paralleisation
+
+	limited to the part that is not paralleised == maximum possible speedup
+
+ 
+
+#Location
+.Cluster Controls/
+
+### PACKAGES ###
+# Node01
+	#check for all nodes
+		sudo apt-get install nmap
+	#convert nano seconds to seconds
+		sudo apt-get install bc
+	#screen recording
+		sudo apt-get install ffmpeg
+		#example 
+		ffmpeg -f x11grab -s 1920x1028 -i :0.0 -r 5 -vf format=pix_fmts=yuv420p  /home/pi/Videos/output.mkv
+
+### END OF PACKAGES ### 
+
+### NETWORK SETUP ###
+# All Nodes
+
+	sudo /etc/hostname
+		Node0#
+	sudo /etc/hosts
+		192.168.1.1 Node01
+		192.168.1.2 Node02
+		192.168.1.3 Node03
+	sudo /etc/network/interfaces
+		auto eth0
+		allow-hotplug eth0
+		iface eth0 inet static
+		        address 192.168.1.1
+		        netmask 255.255.255.0
+
+# Node01
+
+append to /etc/network/interfaces for multihosting for PoE stats on DLINK
+		auto eth0:0
+		allow-hotplug eth0:0
+		iface eth0:0 inet static
+		        address 10.90.90.2
+		        netmask 255.0.0.0
+
+### END OF NETWORK SETUP ###
+
+### SSH PASSWORDLESS SETUP
+# All Nodes
+	ssh-keygen
+
+# Node02 & Node03
+	sudo nano /etc/ssh/sshd.config
+		Change
+		#PermitRootLogin prohibit-password
+		To
+		PermitRootLogin yes
+
+# Node01 
+
+	ssh_copy_id pi@Node02/3
+	
+### END OF SSH PASSWORDLESS SETPUP	
+
+### CREATE NFS STORAGE ###	
+
+# Node01
+	sudo apt-get install nfs-kernel-server 
+	sudo fdisk -l
+	sudo mkdir /mnt/nfs
+	sudo chown -R pi:pi /mnt/nfs
+
+	sudo /etc/init.d/rpcbind restart
+	sudo /etc/init.d/nfs-kernel-server restart
+	sudo exportfs -r
+	sudo nano /etc/exports
+		/mnt/nfs        192.168.1.0/24(rw,sync,no_subtree_check,root_squash)
+	sudo /etc/init.d/rpcbind restart
+	sudo /etc/init.d/nfs-kernel-server restart
+
+	#Files to be created for ClusterJobs
+	touch /mnt/nfs/Node0#Completed.txt 
+	chmod 777 /mnt/nfs/Node0#Completed.txt
+	touch /mnt/nfs/Node0#Allocation.txt
+	chmod 777 /mnt/nfs/Node0#Allocation.txt
+	touch /mnt/nfs/JobNode0#.txt 
+	chmod 777 /mnt/nfs/JobNode0#.txt
+
+# Node0#
+
+	sudo mkdir /mnt/nfs
+	sudo chown -R pi:pi /mnt/nfs
+	sudo mount 192.168.1.1:/mnt/nfs /mnt/nfs
+	sudo nano /etc/ftabs
+		192.168.1.1:/mnt/nfs    /mnt/nfs        nfs     rw,relatime,vers=4.1,clientaddr=192.168.1.#,addr=192.168.1.1
+
+
+
+### END OF NFS STORAGE ###
+
+### .INIT ###
+
+#Node02 & Node03
+	place command here to auto start the script that waits for a job 
+	ClusterControls/Job.sh	
+		Checks /mnts/nfs/JobNode0# for change
+		when change is implemented then task is run
+		Adds results to /mnts/Node0#Completed.txt
+
+### END OF .INIT ###
+
+
+### FILES CREATED BY NODE01 ###
+#ClusterControls/
+├── ClusterSystemStats.sh
+├── Notes.txt
+├── OnlineNodes.sh
+├── RebootCluster.sh
+├── RunJob.sh
+├── ShutdownCluster.sh
+└── TaskNotification.sh
+
+Notes.txt - this file!
+
+OnlineNodes.sh
+	This file checks to see if all the Nodes have come online there should be three nodes: node01, 02 & 03
+
+ClusterSystemStats.sh
+	Currently checks the cpu ram, cpu mem and temperature of node01, 02 & 03
+
+RunJob.sh arg (-1 || -2) and (loop as a number)
+	depending on option supplied
+	-1 duplicate job
+	-2 split job in 2
+	-# size of job
+ 	Then sends requested job to the /mnt/nfs/JobNode0#.txt
+	Finally, TaskNotification.sh is called to monitior files for change
+
+ShutdownCluster.sh   
+	will shutdown node 02 & 03 wait for a response then shutdown node01
+
+RebootCluster.sh arg -1 || -2 || -3 || -4
+	depending on option supplied 
+	-1 reboot node02 
+	-2 reboot node03
+	-3 reboot node02 & node03
+	-4 reboot node02, node03 & node01
+
+TaskNotification.sh
+	Checks to see it the files /mnt/nfs/Node0#Completed.txt have been changed
+	this indicates that the  Nodes have completed their given task
+	At end clears /mnt/nfs/Node0#Completed.txt files ready for next job
+
+#/mnt/nfs/
+├── Node02
+│   ├── Assignment
+│   │   └── JobNode02.txt
+│   ├── CoreJobs
+│   │   ├── Core1Cracker.sh
+│   │   ├── Core2Cracker.sh
+│   │   ├── Core3Cracker.sh
+│   │   └── Core4Cracker.sh
+│   └── Reporting
+│       ├── Node02Completed.txt
+│       └── Node02Status.txt
+├── Node03
+│   ├── Assignment
+│   │   └── JobNode03.txt
+│   ├── CoreJobs
+│   │   ├── Core1Cracker.sh
+│   │   ├── Core2Cracker.sh
+│   │   ├── Core3Cracker.sh
+│   │   └── Core4Cracker.sh
+│   └── Reporting
+│       ├── Node03Completed.txt
+│       └── Node03Status.txt
+└── Testing
+    ├── EightLooperCracker.sh
+    ├── guess.sh
+    ├── guess.txt
+    └── TestAscii.sh
+
+
+Node0#Completed.txt
+	These files will recieve the output from the Node0# for Node01 to read once they have completed 
+	their given tasks 
+JobNode0#.txt
+	This is where Node02 and Node03 will look for new job 
+
+
+### END OF FILES OF FILES CREATED BY NODE01 ###
+
+### FILES CREATED BY NODE02 && NODE03 ###
+
+Job.sh
+	This is run manaully and checks for change in file /mnt/nfs/JobNode0#.txt 
+	Data is the read and action on accordingly 
+	Output is passed into /mnt/nfs/Node0#Completed.txt
+	Clears /mnt/nfs/JobNode0#.txt ready for next job.
+
+AutoJob.sh
+	TO DO NEED TO HAVE THIS SCRIPT RUN AT START UP
+
+### END OF FILES CREATED BY NODE02 && NODE03 ###
+
+### ALIASES  SETUP ###
+
+#Node01
+	sudo nano .bashrc
+		append to the end of file
+		alias OnlineNodes='bash ClusterControls/OnlineNodes.sh'
+		alias SDCluster='bash ClusterControls/ShutdownCluster.sh'
+		alias RBCluser='bash ClusterControls/RebootCluster.sh'
+		alias CSSTATS='bash ClusterControls/ClusterSystemStats.sh'
+		alias TNOTIFIER='bash ClusterControls/TaskNotification.sh'
+		alias RunJob='bash ClusterControls/RunJob.sh'
+		alias Node02='ssh Node02'
+		alias Node03='ssh Node03
+'		
+#Node02 and Node03
+	sudo nano .bashrc
+		append to the end of file
+		alias Job='bash ClusterControls/Job.sh'  #THIS IS FOR MANUAL MODE
+		alias AutoJob='bash ClusterControls/AutoJob.sh' #THIS IS FOR AUTOMODE
+		
+### END OF ALIASES ###
+	
+
+### MULTI-CORE ###
+
+Multiple files for each Node0# and cores 
+
+taskset -c # bash /mnt/nfs/EightLoopCracker.sh
+
+ps -fp <pid> get time?
+
+### END OF MULTI-CORE ### 
+
+
+

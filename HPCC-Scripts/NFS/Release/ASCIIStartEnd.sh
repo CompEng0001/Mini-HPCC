@@ -1,0 +1,72 @@
+#! /usr/bin/bash
+
+## Alias: CompEng0001
+## Created by: Richard BLair
+## SID: 000947441
+
+# actual core 
+# split job 
+
+declare -a ASCIISTART1
+declare -a ASCIISTART2
+declare -a ASCIISTART3
+declare -a ASCIISTART4
+declare -a ASCIISTART5
+declare -a ASCIISTART6
+declare -a ASCIISTART7
+declare -a ASCIISTART8
+
+declare -a ASCIIEND1
+declare -a ASCIIEND2
+declare -a ASCIIEND3
+declare -a ASCIIEND4
+declare -a ASCIIEND5
+declare -a ASCIIEND6
+declare -a ASCIIEND7
+declare -a ASCIIEND8
+
+ASCIISTART1=(32 32 32 32 32 32 32 32)
+ASCIISTART2=(0 80 64 56 51 48 46 44)
+ASCIISTART3=(0 0 95 79 68 63 59 55)
+ASCIISTART4=(0 0 0 103 88 79 63 67)
+ASCIISTART5=(0 0 0 0 107 95 87 79)
+ASCIISTART6=(0 0 0 0 0 112 102 92)
+ASCIISTART7=(0 0 0 0 0 0 115 103)
+ASCIISTART8=(0 0 0 0 0 0  0 113)
+
+ASCIIEND1=(126 79 63 55 49 46 45 43)
+ASCIIEND2=(0 126 94 78 68 62 58 54)
+ASCIIEND3=(0 0 126 102 87 78 72 66)
+ASCIIEND4=(0 0 0 126 106 94 86 78)
+ASCIIEND5=(0 0 0 0 126 111 101 91)
+ASCIIEND6=(0 0 0 0 0 126 114 102)
+ASCIIEND7=(0 0 0 0 0 0 126 112)
+ASCIIEND8=(0 0 0 0 0 0  0 126)
+
+if [ $1 == 1 ];then
+	START=${ASCIISTART1[$2-1]}
+	END=${ASCIIEND1[$2-1]}
+elif [ $1 == 2 ];then
+	START=${ASCIISTART2[$2-1]}
+	END=${ASCIIEND2[$2-1]}
+elif [ $1 == 3 ];then
+	START=${ASCIISTART3[$2-1]}
+	END=${ASCIIEND3[$2-1]}
+elif [ $1 == 4 ];then
+	START=${ASCIISTART4[$2-1]}
+	END=${ASCIIEND4[$2-1]}
+elif [ $1 == 5 ];then
+	START=${ASCIISTART5[$2-1]}
+	END=${ASCIIEND5[$2-1]}
+elif [ $1 == 6 ]; then
+	START=${ASCIISTART6[$2-1]}
+	END=${ASCIIEND6[$2-1]}
+elif [ $1 == 7 ];then
+	START=${ASCIISTART7[$2-1]}
+	END=${ASCIIEND7[$2-1]}
+elif [ $1 == 8 ];then
+	START=${ASCIISTART8[$2-1]}
+	END=${ASCIIEND8[$2-1]}
+fi
+
+echo ${START} ${END}
