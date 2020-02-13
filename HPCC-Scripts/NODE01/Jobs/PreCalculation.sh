@@ -32,7 +32,7 @@ WFS=$(echo ${FS} | awk '{ split("B KB MB GB TB PB ZB", v); s=1; while($1>1024) {
 
 ENTROPY=$(log2 ${R}) # bits of entropy
 
-EPS=6.750 # ENTRPOY per symbol at N
+EPS=$(log2 ${N}) # ENTRPOY per symbol at N
 CORES=$(awk 'NR==4' ${CONFIG})
 SCPS=19
 IPS=$(( ${CORES}*${SCPS} )) # estimated iterations per second on CORES
@@ -51,7 +51,7 @@ echo -e "Length of Password: ${L}"
 echo -e "Number of Possible Password Permutations(R) is ${N}^${L} = ${WR}"
 echo -e "Estimated FileSize for a Rainbow Table for all possible R: ${WFS}"
 echo -e "Entropy per Symbol at ${N}: ${EPS}"
-echo -e "Bits of Entropy is log2(${N}^${L}) = ${ENTROPY/}"
+echo -e "Bits of Entropy is log2(${N}^${L}) = ${ENTROPY}"
 echo -e "Number of Cores to be assigned: ${CORES}"
 echo -e "Iterations per core is: ${SCPS}"
 echo -e "Total estimated iterations per second is ${CORES}*${SCPS} = ${IPS}"
