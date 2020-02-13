@@ -29,70 +29,70 @@ while [ 1 ]
 		CONFIG="/mnt/nfs/Release/Cracker.config"
 		NoC=$(awk 'NR==4' ${CONFIG})
 
-			if [[ ${NoC} == 1 ]]; then  					#  N C S
-				taskset -c 0 bash /mnt/nfs/Release/CoreCracker.sh 2 1 1 &
+		if [[ ${NoC} == 1 ]]; then  					   #  N C S
+			taskset -c 0 bash /mnt/nfs/Release/CoreCracker.sh 2 1 1 &
 
-			elif [[ ${NoC} == 2 ]]; then
-				taskset -c 0 bash /mnt/nfs/Release/CoreCracker.sh 2 1 2 &
-				taskset -c 1 bash /mnt/nfs/Release/CoreCracker.sh 2 2 2 &
+		elif [[ ${NoC} == 2 ]]; then
+			taskset -c 0 bash /mnt/nfs/Release/CoreCracker.sh 2 1 2 &
+			taskset -c 1 bash /mnt/nfs/Release/CoreCracker.sh 2 2 2 &
 
-			elif [[ ${NoC} == 3 ]]; then
-				taskset -c 0 bash /mnt/nfs/Release/CoreCracker.sh 2 1 3 &
-				taskset -c 1 bash /mnt/nfs/Release/CoreCracker.sh 2 2 3 &
-				taskset -c 2 bash /mnt/nfs/Release/CoreCracker.sh 2 3 3 &
+		elif [[ ${NoC} == 3 ]]; then
+			taskset -c 0 bash /mnt/nfs/Release/CoreCracker.sh 2 1 3 &
+			taskset -c 1 bash /mnt/nfs/Release/CoreCracker.sh 2 2 3 &
+			taskset -c 2 bash /mnt/nfs/Release/CoreCracker.sh 2 3 3 &
 
-			elif [[ ${NoC} == 4 ]]; then
-				taskset -c 0 bash /mnt/nfs/Release/CoreCracker.sh 2 1 4 &
-				taskset -c 1 bash /mnt/nfs/Release/CoreCracker.sh 2 2 4 &
-				taskset -c 2 bash /mnt/nfs/Release/CoreCracker.sh 2 3 4 &
-				taskset -c 3 bash /mnt/nfs/Release/CoreCracker.sh 2 4 4 &
+		elif [[ ${NoC} == 4 ]]; then
+			taskset -c 0 bash /mnt/nfs/Release/CoreCracker.sh 2 1 4 &
+			taskset -c 1 bash /mnt/nfs/Release/CoreCracker.sh 2 2 4 &
+			taskset -c 2 bash /mnt/nfs/Release/CoreCracker.sh 2 3 4 &
+			taskset -c 3 bash /mnt/nfs/Release/CoreCracker.sh 2 4 4 &
 
-			elif [[ ${NoC} == 5 ]]; then
-				taskset -c 0 bash /mnt/nfs/Release/CoreCracker.sh 2 1 5 &
-				taskset -c 1 bash /mnt/nfs/Release/CoreCracker.sh 2 2 5 &
-				taskset -c 2 bash /mnt/nfs/Release/CoreCracker.sh 2 3 5 &
-				taskset -c 3 bash /mnt/nfs/Release/CoreCracker.sh 2 4 5 &
+		elif [[ ${NoC} == 5 ]]; then
+			taskset -c 0 bash /mnt/nfs/Release/CoreCracker.sh 2 1 5 &
+			taskset -c 1 bash /mnt/nfs/Release/CoreCracker.sh 2 2 5 &
+			taskset -c 2 bash /mnt/nfs/Release/CoreCracker.sh 2 3 5 &
+			taskset -c 3 bash /mnt/nfs/Release/CoreCracker.sh 2 4 5 &
 
-			elif [[ ${NoC} == 6 ]]; then
-				taskset -c 0 bash /mnt/nfs/Release/CoreCracker.sh 2 1 6 &
-				taskset -c 1 bash /mnt/nfs/Release/CoreCracker.sh 2 2 6 &
-				taskset -c 2 bash /mnt/nfs/Release/CoreCracker.sh 2 3 6 &
-				taskset -c 3 bash /mnt/nfs/Release/CoreCracker.sh 2 4 6 &
+		elif [[ ${NoC} == 6 ]]; then
+			taskset -c 0 bash /mnt/nfs/Release/CoreCracker.sh 2 1 6 &
+			taskset -c 1 bash /mnt/nfs/Release/CoreCracker.sh 2 2 6 &
+			taskset -c 2 bash /mnt/nfs/Release/CoreCracker.sh 2 3 6 &
+			taskset -c 3 bash /mnt/nfs/Release/CoreCracker.sh 2 4 6 &
 
-			elif [[ ${NoC} == 7 ]]; then
-				taskset -c 0 bash /mnt/nfs/Release/CoreCracker.sh 2 1 7 &
-				taskset -c 1 bash /mnt/nfs/Release/CoreCracker.sh 2 2 7 &
-				taskset -c 2 bash /mnt/nfs/Release/CoreCracker.sh 2 3 7 &
-				taskset -c 3 bash /mnt/nfs/Release/CoreCracker.sh 2 4 7 &
+		elif [[ ${NoC} == 7 ]]; then
+			taskset -c 0 bash /mnt/nfs/Release/CoreCracker.sh 2 1 7 &
+			taskset -c 1 bash /mnt/nfs/Release/CoreCracker.sh 2 2 7 &
+			taskset -c 2 bash /mnt/nfs/Release/CoreCracker.sh 2 3 7 &
+			taskset -c 3 bash /mnt/nfs/Release/CoreCracker.sh 2 4 7 &
 
-			elif [[ ${NoC} == 8 ]]; then
-				taskset -c 0 bash /mnt/nfs/Release/CoreCracker.sh 2 1 8 &
-				taskset -c 1 bash /mnt/nfs/Release/CoreCracker.sh 2 2 8 &
-				taskset -c 2 bash /mnt/nfs/Release/CoreCracker.sh 2 3 8 &
-				taskset -c 3 bash /mnt/nfs/Release/CoreCracker.sh 2 4 8 &
+		elif [[ ${NoC} == 8 ]]; then
+			taskset -c 0 bash /mnt/nfs/Release/CoreCracker.sh 2 1 8 &
+			taskset -c 1 bash /mnt/nfs/Release/CoreCracker.sh 2 2 8 &
+			taskset -c 2 bash /mnt/nfs/Release/CoreCracker.sh 2 3 8 &
+			taskset -c 3 bash /mnt/nfs/Release/CoreCracker.sh 2 4 8 &
 
-			else
+		else
 
-			fi
+		fi
 
-				COREPIDS=$(pgrep -f "bash /mnt/nfs/Release/CoreCracker.sh")
+		COREPIDS=$(pgrep -f "bash /mnt/nfs/Release/CoreCracker.sh")
 
-				echo -e ${COREPIDS} >> /mnt/nfs/Node02/Reporting/CorePID.txt
-				echo -e "Jobs assigned..."
+		echo -e ${COREPIDS} >> /mnt/nfs/Node02/Reporting/CorePID.txt
+		echo -e "Jobs assigned..."
 
-				echo -e ""
+		echo -e ""
 
-				until [[ "${SUMORESULTSFILE}" != "${SUMNRESULTSFILE}" ]]
-						do
-								SUMNRESULTSFILE=$(md5sum ${JOBRESULTS})
-								sleep 2
-						done
+		until [[ "${SUMORESULTSFILE}" != "${SUMNRESULTSFILE}" ]]
+				do
+						SUMNRESULTSFILE=$(md5sum ${JOBRESULTS})
+						sleep 2
+				done
 
-				echo -e "jobs finished"
-				tail -n +2  ${NODESTATUS} > ${NODESTATUS}
-				echo -e "Inactive" >> ${NODESTATUS}
-				tail -n +2 "${JOBFILE}" > "${JOBFILE}"
-				kill -9 ${COREPIDS}
-				sleep 10
+		echo -e "jobs finished"
+		tail -n +2  ${NODESTATUS} > ${NODESTATUS}
+		echo -e "Inactive" >> ${NODESTATUS}
+		tail -n +2 "${JOBFILE}" > "${JOBFILE}"
+		kill -9 ${COREPIDS}
+		sleep 10
 	done
 
