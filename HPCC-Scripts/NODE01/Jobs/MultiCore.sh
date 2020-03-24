@@ -22,8 +22,6 @@ SUMNNODE02=$(md5sum ${NODE02COMPLETED})
 SUMONODE03=$(md5sum ${NODE03COMPLETED})
 SUMNNODE03=$(md5sum ${NODE03COMPLETED})
 
-
-
 if [[ ${NoC} < 5 ]]; then
 
 	## Send command to Node0# to start job
@@ -85,24 +83,24 @@ elif [[ ${NoC} > 4 ]]; then
 			fi
 
 			if [[ ${SUMONODE03} != ${SUMNNODE03} ]]; then
-		                ANSWER=$(<${NODE03COMPLETED}) #${GUESS}  ${ITERATIONS} ${DURATION} "
-		                PASSWORD=$(echo -e ${ANSWER} | awk '{print$1}')
-		                ITERATIONS=$(echo -e ${ANSWER} | awk '{print$2}')
-		                TIME=$(echo -e ${ANSWER} | awk '{print$3}')
+				ANSWER=$(<${NODE03COMPLETED}) #${GUESS}  ${ITERATIONS} ${DURATION} "
+				PASSWORD=$(echo -e ${ANSWER} | awk '{print$1}')
+				ITERATIONS=$(echo -e ${ANSWER} | awk '{print$2}')
+				TIME=$(echo -e ${ANSWER} | awk '{print$3}')
 				NODE=$(echo -e ${ANSWER} | awk '{print$4}')
 				CORE=$(echo -e ${ANSWER} | awk '{print$5}')
-		                echo -e "\r\r\r"
+				echo -e "\r\r\r"
 				echo -e "\r"
 				echo -n -e "Completed by Node: ${NODE} | Core: ${CORE} | Password is: ${PASSWORD} | Iterations: ${ITERATIONS} | Time(s): "
-		                echo -e "scale=4;${TIME}/1000" | bc
+				echo -e "scale=4;${TIME}/1000" | bc
 				echo -e "${NODE},${NoC},${CORE},${PASSWORD},${TIME},${ITERATIONS}" >> /mnt/nfs/Release/log.csv
 				sleep 4
 				tail -n +2 "${NODE03COMPLETED}" > "${NODE03COMPLETED}"
-		                COMPLETED="TRUE"
-		                exit 1
-		    else
-		                SUMNNODE03=$(md5sum ${NODE03COMPLETED} )
-		    fi
+				COMPLETED="TRUE"
+				exit 1
+			else
+				SUMNNODE03=$(md5sum ${NODE03COMPLETED} )
+			fi
 		done
 else
 	echo "Enter the number of cores you want for to use for the job into ${CONFIG}" 
