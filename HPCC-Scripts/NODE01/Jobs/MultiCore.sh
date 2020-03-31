@@ -34,15 +34,15 @@ if [[ ${NoC} < 5 ]]; then
 			if [[ ${SUMONODE02} != ${SUMNNODE02} ]]; then
 				ANSWER=$(<${NODE02COMPLETED}) #${GUESS}  ${ITERATIONS} ${DURATION} "
 				PASSWORD=$(echo -e ${ANSWER} | awk '{print$1}')
-                                ITERATIONS=$(echo -e ${ANSWER} | awk '{print$2}')
-                                TIME=$(echo -e ${ANSWER} | awk '{print$3}')
-                                NODE=$(echo -e ${ANSWER} | awk '{print$4}')
-                                CORE=$(echo -e ${ANSWER} | awk '{print$5}')
-                                echo -e "\r\r\r"
-                                echo -e "\r"
-                                echo -n -e "Completed by Node: ${NODE} | Core: ${CORE} | Password is: ${PASSWORD} | Iterations: ${ITERATIONS} | Time(s): "
-                                echo -e "scale=4;${TIME}/1000" | bc
-                                echo -e "${NODE},${NoC},${CORE},${PASSWORD},${TIME},${ITERATIONS}" >> /mnt/nfs/Release/log.csv
+				ITERATIONS=$(echo -e ${ANSWER} | awk '{print$2}')
+				TIME=$(echo -e ${ANSWER} | awk '{print$3}')
+				NODE=$(echo -e ${ANSWER} | awk '{print$4}')
+				CORE=$(echo -e ${ANSWER} | awk '{print$5}')
+				echo -e "\r\r\r"
+				echo -e "\r"
+				echo -n -e "Completed by Node: ${NODE} | Core: ${CORE} | Password is: ${PASSWORD} | Iterations: ${ITERATIONS} | Time(s): "
+				echo -e "scale=4;${TIME}/1000" | bc
+				echo -e "${NODE},${NoC},${CORE},${PASSWORD},${TIME},${ITERATIONS}" >> /mnt/nfs/Release/log.csv
 				sleep 4
 				tail -n +2 "${NODE02COMPLETED}" > "${NODE02COMPLETED}"
 				COMPLETED="TRUE"
@@ -63,16 +63,16 @@ elif [[ ${NoC} > 4 ]]; then
 		do
 			if [[ ${SUMONODE02} != ${SUMNNODE02} ]]; then
 				ANSWER=$(<${NODE02COMPLETED}) #${GUESS}  ${ITERATIONS} ${DURATION} "
-		               # echo ${ANSWER}
+		        # echo ${ANSWER}
 				PASSWORD=$(echo -e ${ANSWER} | awk '{print$1}')
-		                ITERATIONS=$(echo -e ${ANSWER} | awk '{print$2}')
-		                TIME=$(echo -e ${ANSWER} | awk '{print$3}')
+				ITERATIONS=$(echo -e ${ANSWER} | awk '{print$2}')
+				TIME=$(echo -e ${ANSWER} | awk '{print$3}')
 				NODE=$(echo -e ${ANSWER} | awk '{print$4}')
 				CORE=$(echo -e ${ANSWER} | awk '{print$5}')
-		                echo -e "\r\r\r"
+				echo -e "\r\r\r"
 				echo -e "\r"
 				echo -n -e "Completed by Node: ${NODE} | Core: ${CORE} | Password is: ${PASSWORD} | Iterations: ${ITERATIONS} | Time(s): "
-		                echo -e "scale=4;${TIME}/1000" | bc
+				echo -e "scale=4;${TIME}/1000" | bc
 				echo -e "${NODE},${NoC},${CORE},${PASSWORD},${TIME},${ITERATIONS}" >> /mnt/nfs/Release/log.csv
 				sleep 4
 				tail -n +2 "${NODE02COMPLETED}" > "${NODE02COMPLETED}"

@@ -130,23 +130,23 @@ do
 																WPAOUTPUT=$(wpa_passphrase ${KNOWNSSID} "${GUESS}")
 																GUESSHASH=$(echo ${WPAOUTPUT} | awk -F '=' '{print $NF}' | rev | cut -c 3- | rev)
 																ITERATIONS=$((${ITERATIONS} + 1))
-                                                                        if [ "${GUESSHASH}" == "${KNOWNHASH}" ];
-                                                                       	then
-																			END=$(date +%s%3N)
-																			DURATION=$(( ${END} - ${START} ))
-                                                                            echo -n -e "${GUESS} ${ITERATIONS} ${DURATION} ${NODE} ${CORE}" >> /mnt/nfs/Node0${NODE}/Reporting/Node0${NODE}Completed.txt
-                                                                        	exit 0
-																		fi
+																	if [ "${GUESSHASH}" == "${KNOWNHASH}" ];
+																	then
+																		END=$(date +%s%3N)
+																		DURATION=$(( ${END} - ${START} ))
+																		echo -n -e "${GUESS} ${ITERATIONS} ${DURATION} ${NODE} ${CORE}" >> /mnt/nfs/Node0${NODE}/Reporting/Node0${NODE}Completed.txt
+																		exit 0
+																	fi
 																EIGHT=$(( ${EIGHT}+1 ))
 																GUESSHASH=""
 																GUESS=""
-                                                       		done
+                                                    		done
 														if [[ LOCKEIGHT == 1 ]];then
 															EIGHT=${STARTLOOP}
 														else
 															EIGHT=${OEIGHT}
 														fi
-						       							SEVEN=$(( ${SEVEN} + 1 ))
+														SEVEN=$(( ${SEVEN} + 1 ))
                                                		 done
 													if [[ LOCKSEVEN == 1 ]];then
 														SEVEN=${STARTLOOP}

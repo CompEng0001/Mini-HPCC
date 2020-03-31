@@ -104,7 +104,7 @@ do
                         GUESSTHREE=$(echo "${THREE}" | awk '{ printf("%c",$0); }') 
 
                         while [ ${FOUR} -le ${EFOUR} ]
-                       		do
+                    		do
 
                                 GUESSFOUR=$(echo "${FOUR}" | awk '{ printf("%c",$0); }')
 
@@ -121,39 +121,39 @@ do
                                                 while [ ${SEVEN} -le ${ESEVEN} ]
                                                 	do
 
-                                                        GUESSSEVEN=$(echo "${SEVEN}" | awk '{ printf("%c",$0); }')
+													GUESSSEVEN=$(echo "${SEVEN}" | awk '{ printf("%c",$0); }')
 
-                                                        while [ ${EIGHT} -le ${EEIGHT} ]
-	                                                        do
-                                                                GUESSEIGHT=$(echo "${EIGHT}" | awk '{ printf("%c",$0); }')
-                                                                GUESS=${GUESSONE}${GUESSTWO}${GUESSTHREE}${GUESSFOUR}${GUESSFIVE}${GUESSSIX}${GUESSSEVEN}${GUESSEIGHT} 
-																WPAOUTPUT=$(wpa_passphrase ${KNOWNSSID} "${GUESS}")
-																GUESSHASH=$(echo ${WPAOUTPUT} | awk -F '=' '{print $NF}' | rev | cut -c 3- | rev)
-																ITERATIONS=$((${ITERATIONS} + 1))
-                                                                        if [ "${GUESSHASH}" == "${KNOWNHASH}" ];
-                                                                       	then
-																			END=$(date +%s%3N)
-																			DURATION=$(( ${END} - ${START} ))
-                                                                            echo -n -e "${GUESS} ${ITERATIONS} ${DURATION} ${NODE} ${CORE}" >> /mnt/nfs/Node0${NODE}/Reporting/Node0${NODE}Completed.txt
-                                                                        	exit 0
-																		fi
-																EIGHT=$(( ${EIGHT}+1 ))
-																GUESSHASH=""
-																GUESS=""
-                                                       		done
-														if [[ LOCKEIGHT == 1 ]];then
-															EIGHT=${STARTLOOP}
-														else
-															EIGHT=${OEIGHT}
-														fi
-						       							SEVEN=$(( ${SEVEN} + 1 ))
-                                               		 done
-													if [[ LOCKSEVEN == 1 ]];then
-														SEVEN=${STARTLOOP}
+													while [ ${EIGHT} -le ${EEIGHT} ]
+														do
+															GUESSEIGHT=$(echo "${EIGHT}" | awk '{ printf("%c",$0); }')
+															GUESS=${GUESSONE}${GUESSTWO}${GUESSTHREE}${GUESSFOUR}${GUESSFIVE}${GUESSSIX}${GUESSSEVEN}${GUESSEIGHT} 
+															WPAOUTPUT=$(wpa_passphrase ${KNOWNSSID} "${GUESS}")
+															GUESSHASH=$(echo ${WPAOUTPUT} | awk -F '=' '{print $NF}' | rev | cut -c 3- | rev)
+															ITERATIONS=$((${ITERATIONS} + 1))
+																	if [ "${GUESSHASH}" == "${KNOWNHASH}" ];
+																	then
+																		END=$(date +%s%3N)
+																		DURATION=$(( ${END} - ${START} ))
+																		echo -n -e "${GUESS} ${ITERATIONS} ${DURATION} ${NODE} ${CORE}" >> /mnt/nfs/Node0${NODE}/Reporting/Node0${NODE}Completed.txt
+																		exit 0
+																	fi
+															EIGHT=$(( ${EIGHT}+1 ))
+															GUESSHASH=""
+															GUESS=""
+														done
+													if [[ LOCKEIGHT == 1 ]];then
+														EIGHT=${STARTLOOP}
 													else
-														SEVEN=${OSEVEN}
+														EIGHT=${OEIGHT}
 													fi
-													SIX=$(( ${SIX} + 1 ))
+													SEVEN=$(( ${SEVEN} + 1 ))
+													done
+												if [[ LOCKSEVEN == 1 ]];then
+													SEVEN=${STARTLOOP}
+												else
+													SEVEN=${OSEVEN}
+												fi
+												SIX=$(( ${SIX} + 1 ))
                                         	done
 										if [[ LOCKSIX == 1 ]];then
 											SIX=${STARTLOOP}
