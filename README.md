@@ -7,7 +7,7 @@ The Mini-HPCC 'RubusThicket' project is for the Advanced Computer Engineering co
 Please navigate to the Wiki for the full breakdown of the HPCC project.
 
 ## Author
-Richard Blair([CompEng0001](https://github.com/CompEng0001))
+Seb Blair([CompEng0001](https://github.com/CompEng0001))
 
 
 ## Licensing 
